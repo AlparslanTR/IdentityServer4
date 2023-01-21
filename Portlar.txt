@@ -1,0 +1,5 @@
+AutServer Portu : https://localhost:7142
+Client 1 Portu: https://localhost:7182
+Client 2 Portu: https://localhost:7010
+API 1 Portu: https://localhost:7206
+API 2: Portu: https://localhost:7073
