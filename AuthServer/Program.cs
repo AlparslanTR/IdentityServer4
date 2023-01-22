@@ -1,8 +1,21 @@
+using AuthServer;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// ********************* //
 
+// Identity Server Frameworküne kullandýðýmýz yapýyý veya izinleri belirtiyoruz ardýndan bunun
+// hangi sýnýfta yer aldýðýný gösteriyoruz. En son ki kodumuz ise debug aþamasýnda bize geçerli bir þifreli token imzasý saðlýyor.
+// Gerçek ortama gönderirken developer yazýsý yerine normal SigningCredential kullanýlmalýdýr.
+builder.Services.AddIdentityServer() 
+    .AddInMemoryApiResources(Config.GetApiResources())
+    .AddInMemoryApiScopes(Config.GetApiScopes())
+    .AddInMemoryClients(Config.GetClients())
+    .AddDeveloperSigningCredential();
+
+// ********************* //
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -17,7 +30,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseIdentityServer();
 app.UseAuthorization();
 
 app.MapControllerRoute(
