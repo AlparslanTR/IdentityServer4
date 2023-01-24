@@ -14,6 +14,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     opt.Authority = "https://localhost:7142"; // Token sahibi kim ana serverimizi belirtiyoruz.
     opt.Audience = "resource_api1"; // Güvenlik Amaçlý Doðrulama.
 });
+
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("ReadProduct", policy => // Þart Ekle
+    {
+        policy.RequireClaim("scope", "api1.read"); // Claim þartnamesi api1 okuma iþlemi yapabilir.
+    });
+    opt.AddPolicy("UpdateOrCreate", policy =>
+    {
+        policy.RequireClaim("scope", new[] { "api1.update", "api1.create" });
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

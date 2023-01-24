@@ -9,7 +9,7 @@ namespace API1.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        [Authorize]
+        [Authorize(Policy = "ReadProduct")]
         [HttpGet]
         public IActionResult GetProducts()
         {
@@ -19,6 +19,18 @@ namespace API1.Controllers
                 new Product { Id = 3, Name = "Dolap", Price = 1500, Stock = 75 }
             };
             return Ok(productList);
+        }
+
+        [Authorize(Policy ="UpdateOrCreate")] // Program cs de verdiğimiz şartları bu api metotlarında kullanıyoruz.
+        public IActionResult Update(int id)
+        {
+            return Ok($"id'si {id} olan ürün güncellenmiştir");
+        }
+
+        [Authorize(Policy = "UpdateOrCreate")]
+        public IActionResult Create(Product product)
+        {
+            return Ok(product);
         }
     }
 }
