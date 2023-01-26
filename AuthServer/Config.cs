@@ -1,4 +1,6 @@
 ﻿using IdentityServer4.Models;
+using IdentityServer4.Test;
+using System.Security.Claims;
 
 namespace AuthServer
 {
@@ -55,5 +57,38 @@ namespace AuthServer
              }
           };
         } 
+
+        public static IEnumerable<IdentityResource> GetIdentityResources() // Kimlikle ilgili bilgiler
+        {
+            return new List<IdentityResource>()
+            {
+                // Kullanıcılar hakkında tuttuğumuz ekstra datalar.
+                new IdentityResources.OpenId(), // Sub id
+                new IdentityResources.Profile(), // Kullanıcıya ait claimsler bilgiler vb
+            };
+        }
+
+        public static IEnumerable<TestUser>GetUsers() // Memory de göstermelik user tablosu
+        {
+            return new List<TestUser>() // Bu sınıftan yeni list oluşturma
+            {
+                new TestUser() // Örnek memory için user dataları
+                {
+                    SubjectId="1",Username="alparslan@gmail.com", Password="password123",Claims=new List<Claim>()
+                    {
+                        new Claim("given_name","Alparslan"),
+                        new Claim("family_name","Akbas")
+                    }
+                },
+                new TestUser()
+                {
+                    SubjectId="2",Username="kayhan@gmail.com", Password="password123",Claims=new List<Claim>()
+                    {
+                        new Claim("given_name","Kayhan"),
+                        new Claim("family_name","Akbas")
+                    }
+                }
+            };
+        }
     }
 }

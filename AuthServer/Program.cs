@@ -13,6 +13,8 @@ builder.Services.AddIdentityServer()
     .AddInMemoryApiResources(Config.GetApiResources())
     .AddInMemoryApiScopes(Config.GetApiScopes())
     .AddInMemoryClients(Config.GetClients())
+    .AddInMemoryIdentityResources(Config.GetIdentityResources()) // Kullanýcý olan wep app ler için
+    .AddTestUsers(Config.GetUsers().ToList()) // Kullanýcý olan wep app ler için. IEnumarable döndüðümüz için to list ekledik.
     .AddDeveloperSigningCredential();
 
 // ********************* //
