@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System.Security.Claims;
 
@@ -54,7 +55,17 @@ namespace AuthServer
                  // Eğer bilgiler geçerli ise servis uygulamaya access token gönderir.
                  AllowedGrantTypes=GrantTypes.ClientCredentials,
                  AllowedScopes={"api1.read", "api2.write", "api2.update" } // Geçerli Client Hangi API lere izni var bunu belirtiyoruz.
-             }
+             },
+              new Client()
+              {
+                  ClientId="Client1-Mvc",
+                  RequirePkce=false,
+                  ClientName="Client 1 Mvc Uygulaması",
+                  ClientSecrets=new[] {new Secret("password123".Sha256())},
+                  AllowedGrantTypes=GrantTypes.Hybrid,
+                  RedirectUris=new List<string>{ "https://localhost:7182/signin-oidc" },
+                  AllowedScopes={IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile}
+              }
           };
         } 
 
