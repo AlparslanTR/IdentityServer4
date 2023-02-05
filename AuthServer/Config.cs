@@ -71,6 +71,7 @@ namespace AuthServer
                   // SlidingRefreshTokenLifetime - Otomatik yedek token için 15 gün süre verir fakat tekrar bu süre uzayabilir.
                   AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds, // yedek token kullanılmasa dahi 30 gün oto ömrü olur.
                   RefreshTokenExpiration=TokenExpiration.Absolute,
+                  PostLogoutRedirectUris=new List<string>{ "https://localhost:7182/signout-callback-oidc" }, // Çıkış yapmak için
               }
           };
         } 
