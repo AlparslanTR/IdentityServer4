@@ -64,7 +64,13 @@ namespace AuthServer
                   ClientSecrets=new[] {new Secret("password123".Sha256())},
                   AllowedGrantTypes=GrantTypes.Hybrid,
                   RedirectUris=new List<string>{ "https://localhost:7182/signin-oidc" },
-                  AllowedScopes={IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,"api1.read"}
+                  AllowedScopes={IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,"api1.read",IdentityServerConstants.StandardScopes.OfflineAccess},
+                  AllowOfflineAccess=true,
+                  AccessTokenLifetime=DateTime.Now.AddDays(1).Second, // Tokenin ömrü
+                  RefreshTokenUsage=TokenUsage.OneTimeOnly, // yedek token sadece bir kez kullanılabilir
+                  // SlidingRefreshTokenLifetime - Otomatik yedek token için 15 gün süre verir fakat tekrar bu süre uzayabilir.
+                  AbsoluteRefreshTokenLifetime=DateTime.Now.AddDays(60).Second, // yedek token kullanılmasa dahi 30 gün oto ömrü olur.
+
               }
           };
         } 
