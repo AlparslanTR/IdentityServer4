@@ -66,11 +66,11 @@ namespace AuthServer
                   RedirectUris=new List<string>{ "https://localhost:7182/signin-oidc" },
                   AllowedScopes={IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,"api1.read",IdentityServerConstants.StandardScopes.OfflineAccess},
                   AllowOfflineAccess=true,
-                  AccessTokenLifetime=DateTime.Now.AddDays(1).Second, // Tokenin ömrü
+                  AccessTokenLifetime=3*60*60, // Tokenin ömrü 3 saat
                   RefreshTokenUsage=TokenUsage.OneTimeOnly, // yedek token sadece bir kez kullanılabilir
                   // SlidingRefreshTokenLifetime - Otomatik yedek token için 15 gün süre verir fakat tekrar bu süre uzayabilir.
-                  AbsoluteRefreshTokenLifetime=DateTime.Now.AddDays(60).Second, // yedek token kullanılmasa dahi 30 gün oto ömrü olur.
-
+                  AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds, // yedek token kullanılmasa dahi 30 gün oto ömrü olur.
+                  RefreshTokenExpiration=TokenExpiration.Absolute,
               }
           };
         } 
