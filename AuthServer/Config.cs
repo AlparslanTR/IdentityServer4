@@ -64,7 +64,7 @@ namespace AuthServer
                   ClientSecrets=new[] {new Secret("password123".Sha256())},
                   AllowedGrantTypes=GrantTypes.Hybrid,
                   RedirectUris=new List<string>{ "https://localhost:7182/signin-oidc" },
-                  AllowedScopes={IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile}
+                  AllowedScopes={IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,"api1.read"}
               }
           };
         } 
