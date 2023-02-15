@@ -64,7 +64,7 @@ namespace AuthServer
                   ClientSecrets=new[] {new Secret("password123".Sha256())},
                   AllowedGrantTypes=GrantTypes.Hybrid,
                   RedirectUris=new List<string>{ "https://localhost:7182/signin-oidc" },
-                  AllowedScopes={IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,"api1.read",IdentityServerConstants.StandardScopes.OfflineAccess},
+                  AllowedScopes={IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,"api1.read",IdentityServerConstants.StandardScopes.OfflineAccess,"CountryAndCity"},
                   AllowOfflineAccess=true,
                   AccessTokenLifetime=3*60*60, // Tokenin ömrü 3 saat
                   RefreshTokenUsage=TokenUsage.OneTimeOnly, // yedek token sadece bir kez kullanılabilir
@@ -72,6 +72,7 @@ namespace AuthServer
                   AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds, // yedek token kullanılmasa dahi 30 gün oto ömrü olur.
                   RefreshTokenExpiration=TokenExpiration.Absolute,
                   PostLogoutRedirectUris=new List<string>{ "https://localhost:7182/signout-callback-oidc" }, // Çıkış yapmak için
+                  RequireConsent=true,
               }
           };
         } 
@@ -83,6 +84,7 @@ namespace AuthServer
                 // Kullanıcılar hakkında tuttuğumuz ekstra datalar.
                 new IdentityResources.OpenId(), // Sub id
                 new IdentityResources.Profile(), // Kullanıcıya ait claimsler bilgiler vb
+                new IdentityResource(){Name="CountryAndCity",DisplayName="Country And City",Description="Kullanıcının ülke ve şehir bilgisi",UserClaims=new [] {"Country","City"}}
             };
         }
 
@@ -95,7 +97,9 @@ namespace AuthServer
                     SubjectId="1",Username="alparslan@gmail.com", Password="password123",Claims=new List<Claim>()
                     {
                         new Claim("given_name","Alparslan"),
-                        new Claim("family_name","Akbas")
+                        new Claim("family_name","Akbas"),
+                        new Claim("Country","Türkiye"),
+                        new Claim("City","Kütahya")
                     }
                 },
                 new TestUser()
@@ -103,7 +107,9 @@ namespace AuthServer
                     SubjectId="2",Username="kayhan@gmail.com", Password="password123",Claims=new List<Claim>()
                     {
                         new Claim("given_name","Kayhan"),
-                        new Claim("family_name","Akbas")
+                        new Claim("family_name","Akbas"),
+                        new Claim("Country","Türkiye"),
+                        new Claim("City","Domaniç")
                     }
                 }
             };
