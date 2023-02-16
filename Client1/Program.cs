@@ -22,10 +22,16 @@ builder.Services.AddAuthentication(opts =>
     opts.Scope.Add("api1.read");
     opts.Scope.Add("offline_access");
     opts.Scope.Add("CountryAndCity");
+    opts.Scope.Add("Role");
     opts.ClaimActions.MapUniqueJsonKey("Country", "Country");
     opts.ClaimActions.MapUniqueJsonKey("City", "City");
+    opts.ClaimActions.MapUniqueJsonKey("Role", "Role");
+    opts.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    {
+        RoleClaimType = "Role"
+    };
 });
-
+builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

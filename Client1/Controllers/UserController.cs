@@ -51,5 +51,17 @@ namespace Client1.Controllers
             await HttpContext.SignInAsync("Cookies",authenticationResult.Principal,properties);
             return RedirectToAction("Index");
         }
+
+        [Authorize(Roles ="Admin")]
+        public IActionResult AdminAction()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "User")]
+        public IActionResult UserAction()
+        {
+            return View();
+        }
     }
 }
