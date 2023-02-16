@@ -10,7 +10,10 @@ builder.Services.AddAuthentication(opts =>
     // Üyelik sistemlerin de 2 türlü üyelik vardýr biri kiþi diðer bayilik için bunu ayýrt etmek için þemalar kullanýlýyor.
     opts.DefaultScheme = "Cookies";
     opts.DefaultChallengeScheme = "oidc";
-}).AddCookie("Cookies").AddOpenIdConnect("oidc", opts =>
+}).AddCookie("Cookies", opts =>
+{
+    opts.AccessDeniedPath = "/Home/AccessDenied";
+}).AddOpenIdConnect("oidc", opts =>
 {
     opts.SignInScheme = "Cookies";
     opts.Authority = "https://localhost:7142";
